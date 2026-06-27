@@ -27,4 +27,8 @@ impl Turtle {
         self.posy = newy;
         self.angle = angle
     }
+
+    pub fn get_location(&self) -> (i32, i32, f32) {
+        (self.posx, self.posy, self.angle)
+    }
 }
