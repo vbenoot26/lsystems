@@ -1,13 +1,14 @@
 use std::f32::consts::PI;
 
 use raylib::{
-    ffi::{CSSPalette, Color},
+    ffi::Color,
     prelude::{RaylibDraw, RaylibTextureModeExt},
 };
 
-use crate::{draw::TextureDrawer, turtle::Turtle};
+use crate::draw::TextureDrawer;
 
 mod draw;
+mod parser;
 mod turtle;
 
 fn main() {
@@ -20,7 +21,7 @@ fn main() {
         .load_render_texture(&th, width as u32, height as u32)
         .unwrap();
 
-    let mut turtle = Turtle::default();
+    let mut executor = parser::new(100, PI / 2.0);
 
     let mut draw_guard = TextureDrawer {
         mode: rl.begin_texture_mode(&th, &mut texture),
@@ -29,10 +30,10 @@ fn main() {
     draw_guard.mode.clear_background(Color::WHITE);
 
     for _ in 0..100 {
-        turtle.forward(100, &mut draw_guard);
-        turtle.rotate(PI / 2.0);
-        turtle.forward(100, &mut draw_guard);
-        turtle.rotate(-PI / 2.0);
+        match executor.execute("F+F-", &mut draw_guard) {
+            Ok(_) => (),
+            Err(_) => panic!("AAAAH"),
+        }
     }
 
     drop(draw_guard);
