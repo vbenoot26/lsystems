@@ -22,9 +22,12 @@ pub struct Parser {
     stack: Vec<(i32, i32, f32)>,
 }
 
-pub fn new(dist: i32, angle: f32) -> Parser {
+pub fn new(dist: i32, angle: f32, (x, y): (i32, i32), startangle: f32) -> Parser {
+    let mut turtle = Turtle::default();
+    turtle.relocate(x, y, startangle);
+
     Parser {
-        turtle: Turtle::default(),
+        turtle: turtle,
         dist,
         angle,
         stack: vec![],
