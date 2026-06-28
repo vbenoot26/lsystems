@@ -1,8 +1,20 @@
-use std::{collections::HashMap, str::FromStr};
+use std::collections::HashMap;
 
-struct LSystem {
+#[derive(Debug)]
+pub struct LSystem {
     replacements: HashMap<String, String>,
     start: String,
+}
+
+pub fn new(replacements: &[(&str, &str)], start: &str) -> LSystem {
+    return LSystem {
+        replacements: replacements
+            .iter()
+            .cloned()
+            .map(|(k, v)| (String::from(k), String::from(v)))
+            .collect(),
+        start: String::from(start),
+    };
 }
 
 impl LSystem {

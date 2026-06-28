@@ -1,6 +1,17 @@
+use core::fmt;
+
 use crate::{draw::Draw, turtle::Turtle};
 
-pub struct UnknownErr {}
+#[derive(Debug)]
+pub struct UnknownErr {
+    wrong_char: char,
+}
+
+impl fmt::Display for UnknownErr {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Character {} is not recognised", self.wrong_char)
+    }
+}
 
 pub struct Parser {
     turtle: Turtle,
@@ -29,11 +40,11 @@ impl Parser {
                 '+' => self.turtle.rotate(self.angle),
                 '-' => self.turtle.rotate(-self.angle),
                 '[' => self.push_stack(),
-                '}' => {
+                ']' => {
                     let (posx, posy, angle) = self.stack.pop().unwrap();
                     self.turtle.relocate(posx, posy, angle);
                 }
-                _ => return Err(UnknownErr {}),
+                _ => return Err(UnknownErr { wrong_char: char }),
             }
         }
 
