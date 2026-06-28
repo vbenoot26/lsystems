@@ -5,11 +5,7 @@ use raylib::{
     prelude::{RaylibDraw, RaylibTextureModeExt},
 };
 
-use crate::draw::TextureDrawer;
-
-mod draw;
-mod parser;
-mod turtle;
+use lsystems::{draw::TextureDrawer, parser};
 
 fn main() {
     let width = 1920;
